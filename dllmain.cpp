@@ -81,6 +81,7 @@ int __cdecl WrapReadBinary(char* filename) {
 		return ((int(__cdecl*)(char*))0x53BCC0)(filename);
 	}
 	
+
 	std::string modFilename = filename;
 	
 	std::string modFile = "mods/";
@@ -89,10 +90,28 @@ int __cdecl WrapReadBinary(char* filename) {
 	modFile.append(modFilename);
 
 
+	size_t isSavegame = modFilename.find("MH2_00.sav");
+	if (isSavegame != std::string::npos) {
+		std::string modFileSave = "mods/";
+		modFileSave.append(activeMod.c_str());
+		modFileSave.append("/MH2_00.sav");
+
+		std::ifstream f(modFileSave);
+		if (f.good()) {
+			std::cout << "Load Savegame from mod folder" << std::endl;
+
+			filename = new char[modFileSave.length() + 1];
+			strcpy(filename, modFileSave.c_str());;
+
+			return ((int(__cdecl*)(char*))0x53BCC0)(filename);
+		}
+	}
+
+
 	// is the wanted file in our mod folder ?
 	std::ifstream f(modFile.c_str());
 	if (f.good()) {
-
+		std::cout << "Replace file : " << filename << std::endl;
 		//copy the string to char*
 		filename = new char[modFile.length() + 1];
 		strcpy(filename, modFile.c_str());;
@@ -107,6 +126,7 @@ FILE __cdecl Wrap2ReadBinary(char* filename, char* mode) {
 		return ((FILE(__cdecl*)(char*, char*, int))0x61B338)(filename, mode, 64);
 	}
 
+
 	std::string modFilename = filename;
 
 	std::string modFile = "mods/";
@@ -114,10 +134,10 @@ FILE __cdecl Wrap2ReadBinary(char* filename, char* mode) {
 	modFile.append("/");
 	modFile.append(modFilename);
 
-
 	// is the wanted file in our mod folder ?
 	std::ifstream f(modFile.c_str());
 	if (f.good()) {
+		std::cout << "Replace file : " << filename << std::endl;
 
 		//copy the string to char*
 		filename = new char[modFile.length() + 1];
