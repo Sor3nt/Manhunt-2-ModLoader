@@ -169,6 +169,7 @@ extern "C"
 		Memory::VP::InjectHook(0x57B2E5, Wrap2ReadBinary, PATCH_CALL);
 
 		// Hook the readBinary call
+		Memory::VP::InjectHook(0x57B2E5, Wrap2ReadBinary, PATCH_CALL);
 		Memory::VP::InjectHook(0x418A1E, WrapReadBinary, PATCH_CALL);
 		Memory::VP::InjectHook(0x4B0842, WrapReadBinary, PATCH_CALL);
 		Memory::VP::InjectHook(0x4C3A7C, WrapReadBinary, PATCH_CALL);
